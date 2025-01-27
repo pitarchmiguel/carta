@@ -1,12 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Carta from '../components/carta.json';
+const categories = Carta.menu;
 ---
 
 <Layout>
+	 <!-- Imagen de portada -->
 	<div class="flex justify-center">
 		<img src="https://go.nordqr.com/89p92c/ff00b67072u.webp" alt="Logo Fire Station">
 	</div>
 
+	<!-- Cabecera, información -->
 	<div class="p-5">
 		<h1 class="text-2xl font-extrabold uppercase">FireStation</h1>
 
@@ -19,7 +23,65 @@ import Layout from '../layouts/Layout.astro';
 						<span class="text-sm">Dirección, teléfono, horarios</span>
 					</div>
 				</div>
-				<svg  xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-direction-sign"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3.32 12.774l7.906 7.905c.427 .428 1.12 .428 1.548 0l7.905 -7.905a1.095 1.095 0 0 0 0 -1.548l-7.905 -7.905a1.095 1.095 0 0 0 -1.548 0l-7.905 7.905a1.095 1.095 0 0 0 0 1.548z" /><path d="M8 12h7.5" /><path d="M12 8.5l3.5 3.5l-3.5 3.5" /></svg>
+				<button id="btn-info">
+					<svg  xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M13 18l6 -6" /><path d="M13 6l6 6" /></svg>
+				</button>
 			</div>
 		</div>
 	</div>
+
+	<!-- Popup de información -->
+	 <div id="popup-info" class="w-full h-[75%] backdrop-blur-md bg-slate-100 bg-opacity-50 rounded-3xl absolute bottom-0 overflow-hidden hidden">
+		<div class="relative">
+			<img src="https://carta.firestationcafeteria.es/images/mapa.png" alt="">
+			<button id="btn-close" class="absolute top-0 right-0 p-4"><svg  xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-square-x"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14z" /><path d="M9 9l6 6m0 -6l-6 6" /></svg></button>
+		</div>
+
+		<address class="p-5 space-y-4 not-italic">
+			<h1 class="text-2xl font-extrabold uppercase">FireStation</h1>
+			<!-- Dirección -->
+			<div class="flex items-center space-x-2">
+			  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-map-pin">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+				<path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" />
+			  </svg>
+			  <p>C/ Amelia Ferrer Armengot 12<br>12004 Castellón de la Plana, España</p>
+			  
+			</div>
+		
+			
+			<!-- Teléfono -->
+			<div class="flex items-center space-x-2">
+				<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-phone"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></svg>
+			  <a href="tel:+000 000 000" class="hover:text-blue-500">964 000 000</a>
+			</div>
+		  </address>
+		  
+	 </div>
+
+	<!-- Categorías de la carta -->
+	<ul class="flex flex-col gap-2 text-center p-5">
+		{categories.map((category) => (
+			<li class="border-2 border-slate-300 rounded-xl w-full p-3 text-slate-800">
+
+				<a href={`/category/${category.category}`}>{category.category}</a>
+			</li>
+		))}
+	</ul>
+
+	
+
+	 <script>
+		const button = document.querySelector('#btn-info');
+		const popup = document.querySelector('#popup-info');
+
+		button.addEventListener('click', () => {
+			popup.classList.toggle('hidden');
+		});
+
+		const closeButton = document.querySelector('#btn-close');
+		closeButton.addEventListener('click', () => {
+			popup.classList.toggle('hidden');
+		});
+	 </script>
